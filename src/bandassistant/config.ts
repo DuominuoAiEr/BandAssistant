@@ -1,6 +1,6 @@
 
-import { ChatBot, BotModel } from "./chatbot";
-import { asyncStorage } from "./storage";
+import { ChatBot, BotModel } from "./chatbot"
+import { asyncStorage } from "./storage"
 
 export class Config {
 
