@@ -1,0 +1,42 @@
+<template>
+    <div class="history-page-box page-box">
+        <div class="top-box">
+            <img class="back-img" src="/common/Back_B.png" alt="" />
+            <div class="title-box">
+                <text class="title-text">聊天历史</text>
+                <text class="title-text-last">请选择历史记录</text>
+            </div>
+            <img class="setting-img" src="/common/More_B.png" alt="" />
+        </div>
+        <div class="content-box">
+            <div class="list-box">
+                <div class="list">
+                    <img src="/common/add60.png" alt="" class="list-img" />
+                    <div class="list-content">
+                        <text class="list-title">新聊天</text>
+                        <text class="list-context">开启一个新的聊天</text>
+                    </div>
+                    <img src="/common/笑脸.png" alt="" class="list-delete-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+  private: {
+    history_list: undefined // 页面级聊天记录的列表
+  },
+
+  onShow() {
+    // 每次显示该页面都刷新一次聊天历史记录列表的数据
+    this.history_list = this.$app.$def.config.history_list
+  }
+}
+</script>
+
+<style>
+@import "../allpage.css";
+@import "./history.css";
+</style>

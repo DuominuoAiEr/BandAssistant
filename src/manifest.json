@@ -4,7 +4,7 @@
   "versionName": "1.0.0",
   "versionCode": 1,
   "minPlatformVersion": 1000,
-  "icon": "/common/logo.png",
+  "icon": "/common/app_logo.png",
   "deviceTypeList": [
     "watch"
   ],
@@ -36,16 +36,19 @@
   ],
   "config": {
     "logLevel": "log",
-    "designWidth": 336
+    "designWidth": 380
   },
   "router": {
-    "entry": "pages/index",
+    "entry": "pages/history",
     "pages": {
       "pages/index": {
         "component": "index"
       },
       "pages/detail": {
         "component": "detail"
+      },
+      "pages/history":{
+        "component": "history"
       }
     }
   }

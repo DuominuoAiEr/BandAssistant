@@ -11,7 +11,8 @@
     "release": "aiot release",
     "watch": "aiot watch --open-nuttx",
     "lint": "eslint --format codeframe --fix --ext .ux,.js src/",
-    "kill": "taskkill -F -IM qemu-system-armel.exe"
+    "kill": "taskkill -F -IM qemu-system-armel.exe",
+    "kill_linux":"kill -9 $(ps -ef | grep qemu-system-armel)"
   },
   "lint-staged": {
     "*.{ux,js}": [
