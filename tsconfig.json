@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+      "allowJs": true,
+      "esModuleInterop": true,
+      "module": "commonjs",
+      "target": "es5",
+      "outDir": "./build"
+  },
+  "include": [
+      "src/**/*"
+, "build/bandassistant/config.ts"  ],
+  "exclude": [
+      "src/**/*.ux"
+  ]
+}

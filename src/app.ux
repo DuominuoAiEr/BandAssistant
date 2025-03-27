@@ -1,0 +1,13 @@
+<script>
+import {Config} from "./bandassistant/config"
+
+export default {
+  config: new Config(), // 全局唯一配置对象
+  onCreate() {
+    console.info("app.ux[info] ==> 初始化APP成功")
+  },
+  onDestroy() {
+    console.log("app.ux[info] ==> APP已销毁")
+  }
+}
+</script>
