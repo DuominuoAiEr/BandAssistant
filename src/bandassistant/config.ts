@@ -1,11 +1,63 @@
-
 import { ChatBot, BotModel } from "./chatbot"
 import { asyncStorage } from "./storage"
+
+interface HistoryList {
+    apiChat: String, // 聊天接口地址
+    apiKey: String, // API密钥
+    apiHeader: any, // API请求头
+    modelName: String, // 模型名称
+    modelImages: String, // 模型相关图片
+    modelModel: String, // 模型标识
+    historyName: String, // 聊天记录名称
+    historyLastContent: String, // 聊天记录的最后一条内容
+    historyUuid: String, // 聊天记录的唯一标识符
+}
 
 export class Config {
 
     /**JOSN化的聊天记录主要信息列表 */
-    history_list?: Array<any> = []
+    history_list?: Array<HistoryList> = [{
+        "apiChat": "https://api.example.com/chat",
+        "apiKey": "abc123def456",
+        "apiHeader": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer token12345"
+        },
+        "modelName": "ChatModelA",
+        "modelImages": "deepseek.png",
+        "modelModel": "modelA_v1",  
+        "historyName": "测试对话1",
+        "historyLastContent": "你好，这是最后一条消息",
+        "historyUuid": "uuid1234567890"
+    },
+    {
+        "apiChat": "https://api.example.com/chat2",
+        "apiKey": "xyz789uvw012",
+        "apiHeader": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer token67890"
+        },
+        "modelName": "ChatModelB",
+        "modelImages": "llama.png",
+        "modelModel": "modelB_v2",
+        "historyName": "测试对话2",
+        "historyLastContent": "这是第二条测试消息",
+        "historyUuid": "uuid9876543210"
+    }, {
+        "apiChat": "https://api.example.com/chat3",
+        "apiKey": "pqr456stu123",
+        "apiHeader": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer token34567"
+        },
+        "modelName": "ChatModelC",
+        "modelImages": "onechat.png",
+        "modelModel": "modelC_v3",
+        "historyName": "测试对话3",
+        "historyLastContent": "这是第三条测试消息",
+        "historyUuid": "uuid2468135790"
+    }
+    ]
 
     /**JOSN化的模型主要信息列表 */
     model_list?: Array<any> = []
@@ -14,7 +66,9 @@ export class Config {
         this.readModelList()
         this.readHistoryList()
         // 添加自定模型
-        this.model_list.push({})
+        this.model_list.push({
+
+        })
     }
 
     /**
@@ -51,7 +105,6 @@ export class Config {
                 historyName: chatbot.history_name,
                 historyLastContent: chatbot.history_last_content,
                 historyUuid: chatbot.history_uuid,
-                historyList: chatbot.history_list
             })
         }
     }

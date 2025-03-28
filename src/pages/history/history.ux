@@ -16,7 +16,15 @@
                         <text class="list-title">新聊天</text>
                         <text class="list-context">开启一个新的聊天</text>
                     </div>
-                    <img src="/common/笑脸.png" alt="" class="list-delete-img">
+                    <img src="/common/笑脸.png" alt="" class="list-delete-img" />
+                </div>
+                <div class="list" for="{{history_list}}" @click="routerChatPage($item)">
+                    <img src="/common/{{$item.modelImages}}" alt="" class="list-img" />
+                    <div class="list-content">
+                        <text class="list-title">{{ $item.historyName }}</text>
+                        <text class="list-context">{{ $item.historyLastContent }}</text>
+                    </div>
+                    <img src="/common/delete60_nobkg.png" alt="" class="list-delete-img" />
                 </div>
             </div>
         </div>
@@ -24,6 +32,7 @@
 </template>
 
 <script>
+import router from "@system.router"
 export default {
   private: {
     history_list: undefined // 页面级聊天记录的列表
@@ -32,6 +41,17 @@ export default {
   onShow() {
     // 每次显示该页面都刷新一次聊天历史记录列表的数据
     this.history_list = this.$app.$def.config.history_list
+  },
+  routerBack() {
+    // 返回上一个页面
+    router.back()
+  },
+  routerChatPage(item) {
+    // 跳转到聊天页面
+    router.push({
+      uri: "pages/chat",
+      params: item
+    })
   }
 }
 </script>
