@@ -1,25 +1,78 @@
 <template>
   <div class="page-box chat-page-box">
     <div class="top-box">
-        <img class="back-img" @click="{{routerBack}}" src="/common/Back_B.png" alt="" />
-        <div class="title-box">
-            <text class="title-text">聊天历史</text>
-            <text class="title-text-last">请选择历史记录</text>
+      <img class="back-img" @click="routerBack()" src="/common/Back_B.png" alt="" />
+      <div class="title-box">
+        <text class="title-text">{{ modelName }}</text>
+        <text class="title-text-last">{{ historyName }}</text>
+      </div>
+      <img class="setting-img" src="/common/More_B.png" alt="" />
+    </div>
+    <div class="content-box">
+      <div class="list-box">
+        <div class="list" for="{{ chatbot.history_list }}">
+          <div class="user-chat-box" if="{{ $item.role === 'user' }}">
+            <text class="user-chat-text">{{ $item.content }}</text>
+          </div>
+          <div class="bot-chat-box" if="{{ $item.role === 'assistant' }}">
+            <div class="bot-title">
+              <img class="bot-title-img" src="/common/{{ modelImages }}" alt="" />
+              <text class="bot-title-text">{{ modelName }}</text>
+            </div>
+            <text class="bot-context">{{ $item.content }}</text>
+          </div>
         </div>
-        <img class="setting-img" src="/common/More_B.png" alt="" />
+      </div>
+      <div class="bottom-box"></div>
     </div>
   </div>
 </template>
 
 <script>
 import router from "@system.router"
+import {RevChatBot} from "../../bandassistant/chatbot"
 
- export default {
-
-    routerBack(){
-        router.back()
+export default {
+  protected: {
+    apiChat: undefined, // 聊天接口地址，用于与聊天服务交互
+    apiKey: undefined, // API密钥，用于身份验证
+    apiHeader: undefined, // API请求头
+    apiCustom: undefined, // 自定义API请求配置
+    modelName: undefined, // 模型名称，用于显示和标识聊天模型
+    modelImages: undefined, // 模型相关图片，用于界面展示
+    modelModel: undefined, // 模型标识符，用于区分不同的模型
+    historyName: undefined, // 聊天记录名称，用于显示历史记录标题
+    historyLastContent: undefined, // 聊天记录的最后一条内容，用于显示最近的聊天内容
+    historyUuid: undefined // 聊天记录的唯一标识符，用于存储和检索历史记录
+  },
+  private: {
+    chatbot: undefined
+  },
+  routerBack() {
+    router.replace({
+      uri: "pages/history"
+    })
+  },
+  onReady() {
+    // 声明chatbot对象
+    if (!this.apiCustom) {
+      this.chatbot = new RevChatBot(
+        this.apiChat, // 聊天接口地址，用于与聊天服务交互
+        this.apiKey, // API密钥，用于身份验证
+        this.apiCustom, // 自定义API请求配置
+        this.modelName, // 模型名称，用于显示和标识聊天模型
+        this.modelImages, // 模型相关图片，用于界面展示
+        this.modelModel, // 模型标识符，用于区分不同的模型
+        this.historyUuid, // 聊天记录的唯一标识符，用于存储和检索历史记录
+        this.historyName, // 聊天记录名称，用于显示历史记录标题
+        this.historyLastContent // 聊天记录的最后一条内容，用于显示最近的聊天内容
+      )
     }
- }
+    console.log(this.chatbot)
+    console.log(this.modelName)
+    console.log(this.chatbot.modelName)
+  }
+}
 </script>
 
 <style>

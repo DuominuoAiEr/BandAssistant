@@ -7,12 +7,28 @@ class ChatAPI {
     api_header = undefined // 模型请求时附带的Header信息
     api_Custom = true
 
+    constructor(p_api_chat: String, p_api_key: String, p_api_custom: boolean) {
+        this.api_chat = p_api_chat
+        this.api_key = p_api_key
+        this.api_header = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
+            "Authorization": "Bearer " + this.api_key,
+            "Content-Type": "application/json"
+        }
+    }
 }
 
 class BotModel extends ChatAPI {
     m_name: String = "" // 模型名称
     m_images: String = "" // 该模型的图片名称
     m_model: String = "" // 模型具体代号
+
+    constructor(p_api_chat: String, p_api_key: String, p_api_custom: boolean, pm_name: String, pm_images: String, pm_model: String) {
+        super(p_api_chat, p_api_key, p_api_custom);
+        this.m_name = pm_name
+        this.m_images = pm_images
+        this.m_model = pm_model
+    }
 }
 
 
@@ -25,6 +41,20 @@ class ChatHistory extends BotModel {
     history_uuid: String = "" // 聊天记录唯一标识
 
     history_list: Array<any> = [] // 聊天记录历史
+
+    constructor(p_api_chat: String, p_api_key: String, p_api_custom: boolean, pm_name: String, pm_images: String, pm_model: String, p_history_uuid: String, p_history_name: String, p_history_last_content: String) {
+        super(p_api_chat, p_api_key, p_api_custom, pm_name, pm_images, pm_model);
+        this.history_name = p_history_name
+        this.history_last_content = p_history_last_content
+        // 判断UUID是否为空，决定了此是否为新的聊天对象
+        if (p_history_uuid === "" || p_history_uuid === undefined) {
+            this.history_uuid = this.getNewUuid()
+            this.history_list = [{ "role": "user", "content": "你好呀,我该如何使用呢?" }, { "role": "assistant", "content": "点击右下角编辑小按钮输入文字" }]
+        } else {
+            this.history_uuid = p_history_uuid
+            this.readHistory()
+        }
+    }
 
     /**
      * 创建一个新的UUID
@@ -96,28 +126,7 @@ class ChatBot extends ChatHistory {
     is_fetch?: boolean = undefined  // 是否正在请求中
 
     constructor(p_api_chat: String, p_api_key: String, p_api_custom: boolean, pm_name: String, pm_images: String, pm_model: String, p_history_uuid: String, p_history_name: String, p_history_last_content: String) {
-        super()
-        console.log("chatbot初始化")
-        this.api_chat = p_api_chat
-        this.api_key = p_api_key
-        this.api_header = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
-            "Authorization": "Bearer " + this.api_key,
-            "Content-Type": "application/json"
-        }
-        this.m_name = pm_name
-        this.m_images = pm_images
-        this.m_model = pm_model
-        this.history_name = p_history_name
-        this.history_last_content = p_history_last_content
-        // 判断UUID是否为空，决定了此是否为新的聊天对象
-        if (p_history_uuid === "" || p_history_uuid === undefined) {
-            this.history_uuid = this.getNewUuid()
-            this.history_list = [{ "role": "user", "content": "你好呀,我该如何使用呢?" }, { "role": "assistant", "content": "点击右下角编辑小按钮输入文字" }]
-        } else {
-            this.history_uuid = p_history_uuid
-            this.readHistory()
-        }
+        super(p_api_chat, p_api_key, p_api_custom, pm_name, pm_images, pm_model, p_history_uuid, p_history_name, p_history_last_content)
     }
 
 
@@ -128,7 +137,11 @@ class ChatBot extends ChatHistory {
     getBotReplay(user_messages: String) { }
 }
 
-class RevChatBot extends ChatBot{
+class RevChatBot extends ChatBot {
+
+    constructor(p_api_chat: String, p_api_key: String, p_api_custom: boolean, pm_name: String, pm_images: String, pm_model: String, p_history_uuid: String, p_history_name: String, p_history_last_content: String){
+        super(p_api_chat, p_api_key, p_api_custom, pm_name, pm_images, pm_model, p_history_uuid, p_history_name, p_history_last_content)
+    }
 
     getBotReplay(user_messages: String): void {
         console.info("chatbot.ts[info] ==> 开始请求机器人回复")

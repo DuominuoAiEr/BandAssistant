@@ -48,12 +48,13 @@ export default {
   },
   routerChatPage(idx,item) {
     // 跳转到聊天页面
-    router.push({
+    router.replace({
       uri: "pages/chat",
       params: {...item}
     })
   },
   onHide(){
+    // 在页面隐藏时还原数组
     this.$app.$def.config.history_list = this.history_list
   }
 }

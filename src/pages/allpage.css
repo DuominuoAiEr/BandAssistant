@@ -13,7 +13,8 @@ text {
 .top-box {
     width: 100%;
     height: 80px;
-    align-items: centers;
+    overflow: hidden;
+    align-items: center;
 }
 
 .back-img {

@@ -5,6 +5,7 @@ interface HistoryList {
     apiChat: String, // 聊天接口地址
     apiKey: String, // API密钥
     apiHeader: any, // API请求头
+    apiCustom: boolean,
     modelName: String, // 模型名称
     modelImages: String, // 模型相关图片
     modelModel: String, // 模型标识
@@ -18,21 +19,23 @@ export class Config {
     /**JOSN化的聊天记录主要信息列表 */
     history_list?: Array<HistoryList> = [{
         "apiChat": "https://api.example.com/chat",
-        "apiKey": "abc123def456",
+        "apiKey": "",
+        "apiCustom": false,
         "apiHeader": {
             "Content-Type": "application/json",
             "Authorization": "Bearer token12345"
         },
         "modelName": "ChatModelA",
         "modelImages": "deepseek.png",
-        "modelModel": "modelA_v1",  
+        "modelModel": "modelA_v1",
         "historyName": "测试对话1",
         "historyLastContent": "你好，这是最后一条消息",
-        "historyUuid": "uuid1234567890"
+        "historyUuid": undefined
     },
     {
         "apiChat": "https://api.example.com/chat2",
         "apiKey": "xyz789uvw012",
+        "apiCustom": false,
         "apiHeader": {
             "Content-Type": "application/json",
             "Authorization": "Bearer token67890"
@@ -42,10 +45,11 @@ export class Config {
         "modelModel": "modelB_v2",
         "historyName": "测试对话2",
         "historyLastContent": "这是第二条测试消息",
-        "historyUuid": "uuid9876543210"
+        "historyUuid": undefined
     }, {
         "apiChat": "https://api.example.com/chat3",
         "apiKey": "pqr456stu123",
+        "apiCustom": false,
         "apiHeader": {
             "Content-Type": "application/json",
             "Authorization": "Bearer token34567"
@@ -55,7 +59,7 @@ export class Config {
         "modelModel": "modelC_v3",
         "historyName": "测试对话3",
         "historyLastContent": "这是第三条测试消息",
-        "historyUuid": "uuid2468135790"
+        "historyUuid": undefined
     }
     ]
 
@@ -64,11 +68,7 @@ export class Config {
 
     constructor() {
         this.readModelList()
-        this.readHistoryList()
-        // 添加自定模型
-        this.model_list.push({
-
-        })
+        this.readHistoryList
     }
 
     /**
@@ -99,6 +99,7 @@ export class Config {
                 apiChat: chatbot.api_chat,
                 apiKey: chatbot.api_key,
                 apiHeader: chatbot.api_header,
+                apiCustom: chatbot.api_Custom,
                 modelName: chatbot.m_name,
                 modelImages: chatbot.m_images,
                 modelModel: chatbot.m_model,
@@ -120,6 +121,7 @@ export class Config {
                 apiChat: botmodel.api_chat,
                 apiKey: botmodel.api_key,
                 apiHeader: botmodel.api_header,
+                apiCustom: botmodel.api_Custom,
                 modelName: botmodel.m_name,
                 modelImages: botmodel.m_images,
                 modelModel: botmodel.m_model,
@@ -155,16 +157,19 @@ export class Config {
     }
 
     /**从本地读取聊天记录 */
-    readHistoryList() {
+    readHistoryList(): boolean {
         console.info("config.ts[info] ==> 开始读取本地聊天记录列表")
         asyncStorage.get("HistoryList").then((data) => {
             let p_history_list = JSON.parse(data.toString())
             this.history_list = p_history_list.historyList
             console.info("config.ts[info] ==> 读取本地聊天记录列表成功")
+            return true
         }).catch((data) => {
             this.history_list = []
             console.info("config.ts[error] ==> 读取本地聊天记录列表失败,因为:" + data)
+            return false
         })
+        return false
     }
 
     /**保存模型列表到本地 */
@@ -179,15 +184,18 @@ export class Config {
     }
 
     /**读取模型列表到类中 */
-    readModelList() {
+    readModelList(): boolean {
         console.info("config.ts[info] ==> 开始读取模型列表")
         asyncStorage.get("ModelList").then((data) => {
             let p_model_list = JSON.parse(data.toString())
             this.model_list = p_model_list.modelList
             console.info("config.ts[info] ==> 读取模型列表成功")
+            return true
         }).catch((data) => {
             this.model_list = []
             console.info("config.ts[info] ==> 读取模型列表失败,因为:" + data)
+            return false
         })
+        return false
     }
 }
