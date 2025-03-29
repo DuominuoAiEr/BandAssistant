@@ -95,9 +95,8 @@ class ChatBot extends ChatHistory {
 
     is_fetch?: boolean = undefined  // 是否正在请求中
 
-    constructor(p_api_chat: String, p_api_key: String, p_api_custom: boolean, pm_name: String, pm_images: String, pm_model: String, p_history_uuid: String, p_history_name: String, p_history_last_content: String) {
-        super()
-        console.log("chatbot初始化")
+    botInit(p_api_chat: String, p_api_key: String, p_api_custom: boolean, pm_name: String, pm_images: String, pm_model: String, p_history_uuid: String, p_history_name: String, p_history_last_content: String) {
+        console.log("chatbot.ts[info] ==> ChatBot对象开始初始化")
         this.api_chat = p_api_chat
         this.api_key = p_api_key
         this.api_header = {
@@ -118,6 +117,7 @@ class ChatBot extends ChatHistory {
             this.history_uuid = p_history_uuid
             this.readHistory()
         }
+        console.log("chatbot.ts[info] ==> ChatBot对象初始化完成")
     }
 
 
@@ -125,11 +125,6 @@ class ChatBot extends ChatHistory {
      * 请求机器人回复
      * @param user_messages 用户发送的问题
      */
-    getBotReplay(user_messages: String) { }
-}
-
-class RevChatBot extends ChatBot{
-
     getBotReplay(user_messages: String): void {
         console.info("chatbot.ts[info] ==> 开始请求机器人回复")
         if (this.is_fetch) {
@@ -149,8 +144,9 @@ class RevChatBot extends ChatBot{
                 data: JSON.stringify(req_data)
             })
             .then(res => {
+                let bot_replay = res.data.data.choices[0].message.content
+                this.history_list.push({ "role": "assistant", "content": bot_replay })
                 this.is_fetch = false
-                this.history_list.push({ "role": "assistant", "content": res.data.data })
                 console.info("chatbot.ts[info] ==> 请求成功，机器人已经回复")
             })
             .catch(error => {
@@ -160,11 +156,4 @@ class RevChatBot extends ChatBot{
     }
 }
 
-class CustomChatBot extends ChatBot {
-
-    getBotReplay(user_messages: String): void {
-
-    }
-}
-
-export { ChatBot, BotModel, RevChatBot, CustomChatBot, ChatHistory }
+export {ChatBot,ChatHistory,BotModel}

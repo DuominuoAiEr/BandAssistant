@@ -1,7 +1,6 @@
 .content-box {
     flex: 1;
     width: 100%;
-    height: 100%;
 }
 
 .list-box {
@@ -26,7 +25,7 @@
 
 .user-chat-text {
     color: aliceblue;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .bot-chat-box {
@@ -36,25 +35,48 @@
     border-radius: 25px;
     background-color: #212121;
     flex-direction: column;
-    align-items: center;
 }
 
-.bot-title{
+.bot-title {
     overflow: hidden;
+    overflow-y: 100%;
     flex: auto;
     align-items: center;
 }
 
-.bot-title-img{
-    flex: auto;
+.bot-title-img {
+    flex: 1;
 }
 
-.bot-title-text{
-    flex: auto;
+.bot-title-text {
+    flex: 3;
 }
 
-.bot-context{
+.bot-context {
     width: 95%;
     font-size: 25px;
-    color:rgb(200, 200, 200);
+    color: rgb(200, 200, 200);
+}
+
+.bottom-box {
+    height: 80px;
+    width: 100%;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.delete-chat-img {
+    flex: 1;
+}
+
+.input-img {
+    flex: 1;
+}
+
+.send-img {
+    flex: 1;
+}
+
+.change-model-img {
+    flex: 1;
 }

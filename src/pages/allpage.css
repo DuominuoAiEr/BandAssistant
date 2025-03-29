@@ -42,3 +42,32 @@ text {
     margin: 8px 8px 0 0;
     flex: 1;
 }
+
+.input-box {
+    position: absolute;
+    flex-direction: column;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(100, 100, 100, 0.7);
+    transition: height 300ms ease-in-out;
+}
+
+.change-stat-box {
+    justify-content: center;
+    width: 100%;
+}
+
+.input-text-box {
+    padding: 0 20px;
+    width: 100%;
+}
+
+.input-text {
+    padding: 10px;
+    background-color: #212121;
+    border: #616161 solid 2px;
+    border-radius: 20px;
+    width: 100%;
+    font-size: 25px;
+}

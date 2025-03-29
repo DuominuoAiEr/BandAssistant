@@ -1,8 +1,10 @@
 <script>
 import {Config} from "./bandassistant/config"
+import {ChatBot} from "./bandassistant/chatbot"
 
 export default {
   config: new Config(), // 全局唯一配置对象
+  chatbot: new ChatBot(),
   onCreate() {
     console.info("app.ux[info] ==> 初始化APP成功")
   },
