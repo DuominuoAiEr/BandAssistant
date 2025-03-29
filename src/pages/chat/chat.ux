@@ -1,0 +1,28 @@
+<template>
+  <div class="page-box chat-page-box">
+    <div class="top-box">
+        <img class="back-img" @click="{{routerBack}}" src="/common/Back_B.png" alt="" />
+        <div class="title-box">
+            <text class="title-text">聊天历史</text>
+            <text class="title-text-last">请选择历史记录</text>
+        </div>
+        <img class="setting-img" src="/common/More_B.png" alt="" />
+    </div>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+
+ export default {
+
+    routerBack(){
+        router.back()
+    }
+ }
+</script>
+
+<style>
+@import "./chat.css";
+@import "../allpage.css";
+</style>

@@ -49,6 +49,9 @@
       },
       "pages/history":{
         "component": "history"
+      },
+      "pages/chat":{
+        "component": "chat"
       }
     }
   }
